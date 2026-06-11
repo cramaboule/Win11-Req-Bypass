@@ -50,7 +50,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit
 }
 
-# Check if CPU supports SSE4.2 (required for Windows 11 24H2 and x86-64-v2 baseline, and above)
+# Check if CPU supports SSE4.2 (required for Windows 11 24H2 and x86-64-v2 baseline, (and above)
 Add-Type -MemberDefinition @'
     [DllImport("kernel32.dll")]
     public static extern bool IsProcessorFeaturePresent(uint feature);
@@ -129,7 +129,7 @@ function Reset-WindowsUpdate {
 
 function Set-WUTargetRelease {
     Write-Host "`n*** Configure Windows Update Target Release Version ***" -ForegroundColor Cyan
-    Write-Host "1 (or press Enter) - Set default target release version to 24H2"
+    Write-Host "1 (or press Enter) - Set default target release version to 25H2"
     Write-Host "2 - Set a custom target release version"
 
     $choice = Read-Host "Select an option (1-2)"
