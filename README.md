@@ -16,7 +16,7 @@
 #### Run Directly from the Web
 To execute the script quickly, open PowerShell as **Administrator** and run:
 ```powershell
-iwr -useb "https://raw.githubusercontent.com/Win11Modder/Win11-Req-Bypass/main/Win11_Bypass.ps1" | iex
+iwr -useb "https://raw.githubusercontent.com/cramaboule/Win11-Req-Bypass/main/Win11_Bypass.ps1" | iex
 ```
 
 #### Download and Run Manually
