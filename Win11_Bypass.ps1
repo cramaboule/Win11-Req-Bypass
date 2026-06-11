@@ -50,7 +50,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit
 }
 
-# Check if CPU supports SSE4.2 (required for Windows 11 24H2 and x86-64-v2 baseline)
+# Check if CPU supports SSE4.2 (required for Windows 11 24H2 and x86-64-v2 baseline, and above)
 Add-Type -MemberDefinition @'
     [DllImport("kernel32.dll")]
     public static extern bool IsProcessorFeaturePresent(uint feature);
@@ -59,8 +59,8 @@ Add-Type -MemberDefinition @'
 if (-not [Win32.Kernel32]::IsProcessorFeaturePresent(38)) {
     Write-Host "`n============================================================" -ForegroundColor Red
     Write-Host " FATAL: This CPU does not support required SSE4.2 and POPCNT" -ForegroundColor Red
-    Write-Host " Windows 11 24H2 requires x86-64-v2 instructions (non-optional)" -ForegroundColor Red
-    Write-Host " This is a hard requirement – the OS will fail to boot!" -ForegroundColor Red
+    Write-Host " Windows 11 24H2 (and above) requires x86-64-v2 instructions" -ForegroundColor Red
+    Write-Host " (non-optional). This is a hard requirement. The OS will fail to boot!" -ForegroundColor Red
     Write-Host " There is NO workaround. Exiting the script." -ForegroundColor Red
     Write-Host "============================================================" -ForegroundColor Red
     exit 1
@@ -136,9 +136,9 @@ function Set-WUTargetRelease {
     $WinUpdatePath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
 
     if ($choice -eq "" -or $choice -eq "1") {
-        $targetRelease = "24H2"
+        $targetRelease = "25H2"
     } elseif ($choice -eq "2") {
-        $targetRelease = Read-Host "Enter the Windows 11 target release version (e.g 23H2, 24H2)"
+        $targetRelease = Read-Host "Enter the Windows 11 target release version (e.g 23H2, 24H2, 25H2)"
     } else {
         Write-Host "Invalid selection." -ForegroundColor Red
         return
