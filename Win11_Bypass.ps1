@@ -34,11 +34,11 @@ function Show-MainMenu {
 ----------------------------------------------------------------------------------------
                     Windows 11 Bypass & Update Tool
 ----------------------------------------------------------------------------------------
-0 - Reset Windows Update and network settings
+0 - Exit
 1 - Apply registry tweaks (bypass Windows 11 restrictions)
 2 - Set Windows Update target release version
 3 - Remove Windows Update target release version
-4 - Exit
+4 - Reset Windows Update and network settings
 '@
     Write-Host $menu -ForegroundColor Cyan
 }
@@ -228,6 +228,16 @@ function Set-BypassRegistryTweaks {
             Write-Host "Disabled task: $task" -ForegroundColor Green
         }
     }
+
+    # LabConfig bypass keys (installation/upgrade via setup.exe)
+    $labConfigPath = "HKLM:\SYSTEM\Setup\LabConfig"
+    if (-not (Test-Path $labConfigPath)) {
+        New-Item -Path $labConfigPath -Force | Out-Null
+    }
+    New-ItemProperty -Path $labConfigPath -Name "BypassTPMCheck"        -Value 1 -PropertyType DWord -Force | Out-Null
+    New-ItemProperty -Path $labConfigPath -Name "BypassSecureBootCheck" -Value 1 -PropertyType DWord -Force | Out-Null
+    New-ItemProperty -Path $labConfigPath -Name "BypassCPUCheck"        -Value 1 -PropertyType DWord -Force | Out-Null
+    Write-Host "LabConfig bypass keys applied." -ForegroundColor Green
 }
 
 function Wait-AfterInfo {
@@ -244,9 +254,8 @@ while ($true) {
 
     switch ($choice) {
         "0" {
-            Reset-WindowsUpdate
-            Wait-AfterInfo
-
+            Write-Host "Exiting..." -ForegroundColor Yellow
+            exit
         }
         "1" {
             Set-WUTargetRelease
@@ -263,8 +272,8 @@ while ($true) {
         
         }
         "4" {
-            Write-Host "Exiting..." -ForegroundColor Yellow
-            exit
+            Reset-WindowsUpdate
+            Wait-AfterInfo
         }
         default {
             Write-Host "Invalid selection. Please try again." -ForegroundColor Red
