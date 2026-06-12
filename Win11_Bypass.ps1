@@ -237,6 +237,7 @@ function Set-BypassRegistryTweaks {
     New-ItemProperty -Path $labConfigPath -Name "BypassTPMCheck"        -Value 1 -PropertyType DWord -Force | Out-Null
     New-ItemProperty -Path $labConfigPath -Name "BypassSecureBootCheck" -Value 1 -PropertyType DWord -Force | Out-Null
     New-ItemProperty -Path $labConfigPath -Name "BypassCPUCheck"        -Value 1 -PropertyType DWord -Force | Out-Null
+	New-ItemProperty -Path $labConfigPath -Name "BypassRAMCheck"        -Value 1 -PropertyType DWord -Force | Out-Null
     Write-Host "LabConfig bypass keys applied." -ForegroundColor Green
 }
 
