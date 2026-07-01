@@ -265,6 +265,7 @@ while ($true) {
         }
         "2" {
             Set-WUTargetRelease
+			Set-BypassRegistryTweaks
             Wait-AfterInfo
         }
         "3" {
